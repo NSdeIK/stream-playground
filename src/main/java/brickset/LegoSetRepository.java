@@ -47,12 +47,25 @@ public class LegoSetRepository extends Repository<LegoSet> {
                 .mapToInt(LegoSet::getPieces).max().getAsInt();
 
     }
+
+    /**
+     * Adjuk meg csomagolási nevét, és soroljon fel azokat neveket, ami benne van
+     * @param type PackagingType neve
+     */
+    public void printPackagingTypeOnlyNames(String type)
+    {
+        getAll().stream()
+                .filter(l -> l.getPackagingType()!=null && l.getPackagingType().name() == type)
+                .map(l -> l.getName())
+                .forEach(System.out::println);
+    }
+
     public static void main(String[] args) {
         var lego = new LegoSetRepository();
 
         System.out.println(lego.printKereses("Obi-Wan"));
         System.out.println("'null' címke található a lego adatbázisban: " + lego.countLegoNullsCimke() +" db");
         System.out.println("[Theme = Gear] Legnagyobb darabszáma: "+ lego.GetPieceMaxWithTheme("Gear"));
-
+        lego.printPackagingTypeOnlyNames("POLYBAG");
     }
 }
