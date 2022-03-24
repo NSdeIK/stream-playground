@@ -25,10 +25,21 @@ public class LegoSetRepository extends Repository<LegoSet> {
                 .map(l -> "[number: {" + l.getNumber() + "} ,name: {" +l.getName() + "} {,theme: " + l.getTheme() + "}]").toList();
     }
 
+    /**
+     * Hány darab null címke található adatbázisában?
+     *
+     * @return null értékű címkéje darabszámát adja vissza
+     */
+    public long countLegoNullsCimke()
+    {
+        return getAll().stream().filter(l -> l.getTags() == null).count();
+    }
+
     public static void main(String[] args) {
         var lego = new LegoSetRepository();
 
         System.out.println(lego.printKereses("Obi-Wan"));
+        System.out.println("'null' címke található a lego adatbázisban: " + lego.countLegoNullsCimke() +" db");
 
     }
 }
