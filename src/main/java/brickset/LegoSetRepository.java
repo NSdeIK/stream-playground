@@ -60,6 +60,13 @@ public class LegoSetRepository extends Repository<LegoSet> {
                 .forEach(System.out::println);
     }
 
+    public void printFirstandLastNumbers(String a,String b)
+    {
+        getAll().stream().
+                filter(l -> l.getNumber().startsWith(a) && l.getNumber().endsWith(b))
+                .forEach(System.out::println);
+    }
+
     public static void main(String[] args) {
         var lego = new LegoSetRepository();
 
@@ -67,5 +74,6 @@ public class LegoSetRepository extends Repository<LegoSet> {
         System.out.println("'null' címke található a lego adatbázisban: " + lego.countLegoNullsCimke() +" db");
         System.out.println("[Theme = Gear] Legnagyobb darabszáma: "+ lego.GetPieceMaxWithTheme("Gear"));
         lego.printPackagingTypeOnlyNames("POLYBAG");
+        lego.printFirstandLastNumbers("1","5");
     }
 }
