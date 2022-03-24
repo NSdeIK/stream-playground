@@ -35,11 +35,24 @@ public class LegoSetRepository extends Repository<LegoSet> {
         return getAll().stream().filter(l -> l.getTags() == null).count();
     }
 
+    /**
+     * Megadjuk egy theme nevét, és megnézzük, hogy mi a legnagyobb darabszáma (pieces)...
+     *
+     * @return Visszaadja max értékét, ami legnagyobb darabszáma adott theme
+     */
+    public long GetPieceMaxWithTheme(String theme)
+    {
+        return getAll().stream()
+                .filter(l -> l.getTheme() != null && l.getTheme().contains(theme))
+                .mapToInt(LegoSet::getPieces).max().getAsInt();
+
+    }
     public static void main(String[] args) {
         var lego = new LegoSetRepository();
 
         System.out.println(lego.printKereses("Obi-Wan"));
         System.out.println("'null' címke található a lego adatbázisban: " + lego.countLegoNullsCimke() +" db");
+        System.out.println("[Theme = Gear] Legnagyobb darabszáma: "+ lego.GetPieceMaxWithTheme("Gear"));
 
     }
 }
